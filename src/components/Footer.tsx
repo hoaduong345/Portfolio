@@ -21,7 +21,7 @@ const SocialButton = ({
 }) => {
   return (
     <chakra.button
-      bg={useColorModeValue('blackAlpha.100', 'whiteAlpha.100')}
+      bg={useColorModeValue('primary.100', 'whiteAlpha.100')}
       rounded={'full'}
       w={8}
       h={8}
@@ -34,7 +34,7 @@ const SocialButton = ({
       justifyContent={'center'}
       transition={'background 0.3s ease'}
       _hover={{
-        bg: useColorModeValue('blackAlpha.200', 'whiteAlpha.200'),
+        bg: useColorModeValue('primary.200', 'whiteAlpha.200'),
       }}>
       <VisuallyHidden>{label}</VisuallyHidden>
       {children}
@@ -43,10 +43,13 @@ const SocialButton = ({
 }
 
 export function Footer() {
+  // Background matching with Hero theme gradient
+  const bgColor = useColorModeValue('primary.600', 'gray.900');
+  
   return (
     <Box
-      bg={useColorModeValue('gray.50', 'gray.900')}
-      color={useColorModeValue('gray.700', 'gray.200')}>
+      bg={bgColor}
+      color={useColorModeValue("white", "gray.200")}>
       <Container
         as={Stack}
         maxW={'6xl'}
@@ -60,7 +63,7 @@ export function Footer() {
           <SocialButton label={'LinkedIn'} href={'https://www.linkedin.com/in/hoa-truong-705156292/'}>
             <FaLinkedin />
           </SocialButton>
-          <SocialButton label={'GitHub'} href={'https://github.com/hoavantruong'}>
+          <SocialButton label={'GitHub'} href={'https://github.com/hoaduong345'}>
             <FaGithub />
           </SocialButton>
         </Stack>

@@ -1,0 +1,49 @@
+{
+  "title": "Project Showcase",
+  "subtitle": "Selected projects I've contributed to (limited details due to confidentiality agreements)",
+  "responsibilities": "Responsibilities:",
+  "viewProject": "View Details",
+  "projects": {
+    "ecommerce": {
+      "title": "E-commerce Platform with Booking Features",
+      "description": "An e-commerce platform integrated with field/court booking capabilities using the Vendure framework. Implemented branch-based permissions allowing users to book fields, purchase products, and make online payments. This project was executed for a major client with details limited by NDA.",
+      "role": "Team Lead",
+      "responsibilities": [
+        "Led development team and coordinated with stakeholders",
+        "Discussed requirements with team members and provided solutions for client needs",
+        "Consulted with clients about requirement feasibility, estimated completion times, and provided alternative solutions",
+        "Designed scalable architecture for high-traffic periods",
+        "Trained new team members on tools and processes",
+        "Reviewed code and established coding quality standards",
+        "Managed sprint planning and resource allocation"
+      ]
+    },
+    "fintech": {
+      "title": "Blockchain Process Automation",
+      "description": "A process automation software that creates scenario blocks and automates these blocks, allowing users to create automated workflows without writing code. This project was completed for a major client with details restricted by NDA.",
+      "role": "Full Stack Developer",
+      "responsibilities": [
+        "Developed software based on direct client requirements and guidance",
+        "Discussed requirement feasibility with clients, estimated completion times, and suggested alternative solutions",
+        "Developed both back-end and front-end components according to requirements",
+        "Implemented automated testing for front-end and back-end components",
+        "Collaborated with compliance officers on regulatory requirements"
+      ]
+    },
+    "management": {
+      "title": "Cosmetics E-commerce Platform",
+      "description": "A project utilizing the Vendure e-commerce framework with branch-based permissions, allowing each branch to have its own products, inventory, and more. The project was under strict confidentiality due to proprietary business processes.",
+      "role": "Full Stack Developer",
+      "responsibilities": [
+        "Contributed to building and optimizing the system for scalability",
+        "Developed custom dashboard and reporting features",
+        "Implemented e-wallet functionalities integrated with payment gateways like VNPAY",
+        "Developed membership point system with automatic tier upgrades for customer groups",
+        "Integrated with systems like inventory management (Inventree)",
+        "Implemented role-based access control",
+        "Optimized database queries for performance",
+        "Received client feedback, assessed feasibility, and estimated completion times"
+      ]
+    }
+  }
+}

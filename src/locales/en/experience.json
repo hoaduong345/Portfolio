@@ -1,0 +1,47 @@
+{
+  "title": "Work Experience",
+  "subtitle": "My professional journey so far",
+  "responsibilities": "Responsibilities:",
+  "technologies": "Technologies:",
+  "team": "Team:",
+  "client": "Client:",
+  "experiences": [
+    {
+      "id": 1,
+      "title": "SOFTWARE ENGINEER",
+      "company": "Aegona",
+      "location": "Ho Chi Minh City",
+      "duration": "February 2024 - Present",
+      "description": [
+        "Collaborated closely with Project Managers and Designers to define user stories and acceptance criteria, ensuring a user-centered approach throughout the development lifecycle.",
+        "Championed user experience (UI/UX) best practices within the team, resulting in a more intuitive and accessible product for our users.",
+        "Contributed to the development and ongoing maintenance of CI/CD pipelines, thereby automating the build, testing, and deployment processes for enhanced efficiency.",
+        "Translated intricate client requirements into clear and concise technical specifications and subsequently implemented robust and scalable solutions.",
+        "Proactively identified and addressed potential technical challenges that arose during the development process, effectively ensuring that project timelines were consistently met.",
+        "Communicated effectively and regularly with clients to provide comprehensive updates on project progress and to actively gather valuable feedback for continuous improvement."
+      ],
+      "technologies": [
+        "NestJS",
+        "ExpressJS",
+        "ReactJS",
+        "Angular",
+        "MySQL",
+        "PostgreSQL",
+        "GraphQL",
+        "Prisma",
+        "RESTful APIs",
+        "Agile methodology"
+      ]
+    },
+    {
+      "id": 2,
+      "title": "INTERN",
+      "company": "Saigon Total Solution",
+      "duration": "June 2023 - November 2023",
+      "description": [
+        "Assisted in the development of the front-end using React and Typescript for a file management system, comparable to Google Drive, for a client in Japan"
+      ],
+      "technologies": ["React", "TypeScript","Mariadb"]
+    }
+  ]
+}

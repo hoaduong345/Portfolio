@@ -1,0 +1,51 @@
+{
+  "nav": {
+    "home": "Trang chủ",
+    "about": "Giới thiệu",
+    "motivation": "Thư Ngỏ",
+    "skills": "Kỹ năng",
+    "projects": "Dự án",
+    "experience": "Kinh nghiệm",
+    "contact": "Liên hệ"
+  },
+  "languageSwitcher": {
+    "en": "Tiếng Anh",
+    "vi": "Tiếng Việt"
+  },
+  "common": {
+    "close": "Đóng",
+    "cancel": "Hủy",
+    "submit": "Gửi",
+    "reset": "Đặt lại",
+    "loading": "Đang tải..."
+  },
+  "contact": {
+    "title": "Liên hệ với tôi",
+    "subtitle": "Hãy liên hệ với tôi để trao đổi cơ hội hợp tác hoặc chỉ để chào hỏi",
+    "info": "Thông tin liên hệ",
+    "availability": "Hiện tại tôi đang mở cho công việc freelance, vị trí toàn thời gian, hoặc chỉ để trò chuyện thân thiện.",
+    "email": "Email",
+    "phone": "Điện thoại",
+    "location": "Địa điểm",
+    "yourName": "Tên của bạn",
+    "namePlaceholder": "Nhập tên của bạn",
+    "emailPlaceholder": "email@example.com",
+    "subject": "Chủ đề",
+    "selectSubject": "Chọn một chủ đề",
+    "jobOpportunity": "Cơ hội việc làm",
+    "projectInquiry": "Yêu cầu dự án",
+    "collaboration": "Hợp tác",
+    "other": "Khác",
+    "phonePlaceholder": "Số điện thoại của bạn (không bắt buộc)",
+    "message": "Tin nhắn",
+    "messagePlaceholder": "Bạn muốn trao đổi về vấn đề gì?",
+    "sending": "Đang gửi...",
+    "sendMessage": "Gửi tin nhắn",
+    "thankYou": "Cảm ơn bạn đã liên hệ!",
+    "successTitle": "Đã gửi tin nhắn",
+    "sendAnother": "Gửi tin nhắn khác",
+    "errorTitle": "Lỗi khi gửi tin nhắn",
+    "errorMessage": "Đã xảy ra lỗi. Vui lòng thử lại sau.",
+    "tryAgain": "Thử lại"
+  }
+}

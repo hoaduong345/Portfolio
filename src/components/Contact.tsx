@@ -1,108 +1,86 @@
 import {
-    Box,
-    Button,
-    Container,
-    Flex,
-    FormControl,
-    FormErrorMessage,
-    FormLabel,
-    Heading,
-    HStack,
-    IconButton,
-    Input,
-    InputGroup,
-    InputLeftElement,
-    Link,
-    Stack,
-    Text,
-    Textarea,
-    useColorModeValue,
-    VStack,
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogOverlay,
+  Box,
+  Button,
+  Container,
+  Flex,
+  FormControl,
+  FormErrorMessage,
+  FormLabel,
+  Heading,
+  HStack,
+  IconButton,
+  Input,
+  InputGroup,
+  InputLeftElement,
+  Link,
+  Stack,
+  Text,
+  Textarea,
+  useColorModeValue,
+  useDisclosure,
+  useToast,
+  VStack,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
-import { BsGithub, BsLinkedin, BsPerson } from "react-icons/bs";
+import React, { useRef } from "react";
+import { useTranslation } from "react-i18next";
+import { BsPerson } from "react-icons/bs";
 import { MdEmail, MdLocationOn, MdOutlineEmail, MdPhone } from "react-icons/md";
-
-interface FormValues {
-  name: string;
-  email: string;
-  message: string;
-}
-
-interface FormErrors {
-  name?: string;
-  email?: string;
-  message?: string;
-}
+import { contactConfig } from "./contact";
+import { useContactForm } from "./contactForm";
 
 export function Contact() {
-  const [formValues, setFormValues] = useState<FormValues>({
-    name: "",
-    email: "",
-    message: "",
-  });
+  const { t } = useTranslation(["common"]);
+  const toast = useToast();
+  const cancelRef = useRef<HTMLButtonElement>(null);
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const [errors, setErrors] = useState<FormErrors>({});
-  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
-  const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
+  const {
+    formValues,
+    errors,
+    formStatus,
+    handleChange,
+    handleSubmit,
+    resetForm,
+  } = useContactForm();
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target;
-    setFormValues({ ...formValues, [name]: value });
-    // Clear error when field is edited
-    if (errors[name as keyof FormErrors]) {
-      setErrors({ ...errors, [name]: undefined });
+  // Handle success submit with toast notification
+  React.useEffect(() => {
+    if (formStatus.isSubmitted && !formStatus.isError) {
+      toast({
+        title: t("contact.successTitle"),
+        description: formStatus.message,
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+        position: "top",
+      });
+    } else if (formStatus.isSubmitted && formStatus.isError) {
+      onOpen(); // Open error dialog
     }
-  };
+  }, [
+    formStatus.isSubmitted,
+    formStatus.isError,
+    formStatus.message,
+    toast,
+    t,
+    onOpen,
+  ]);
 
-  const validate = (): boolean => {
-    const newErrors: FormErrors = {};
-
-    if (!formValues.name.trim()) {
-      newErrors.name = "Name is required";
-    }
-
-    if (!formValues.email.trim()) {
-      newErrors.email = "Email is required";
-    } else if (
-      !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(formValues.email)
-    ) {
-      newErrors.email = "Invalid email address";
-    }
-
-    if (!formValues.message.trim()) {
-      newErrors.message = "Message is required";
-    }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (validate()) {
-      setIsSubmitting(true);
-
-      // Simulate form submission
-      setTimeout(() => {
-        setIsSubmitting(false);
-        setIsSubmitted(true);
-        // Reset form
-        setFormValues({
-          name: "",
-          email: "",
-          message: "",
-        });
-      }, 1500);
-    }
-  };
+  // Get background gradient matching Hero section
+  const bgGradient = useColorModeValue(
+    'linear(to-br, white, primary.50 80%)',
+    'linear(to-br, gray.900, primary.900 80%)'
+  );
 
   return (
-    <Box py={16} id="contact">
-      <Container maxW={"7xl"} py={10}>
+    <Box id="contact" bgGradient={bgGradient}>
+      <Container maxW={"7xl"} pt={16}>
         <Stack
           spacing={4}
           as={Container}
@@ -110,17 +88,16 @@ export function Contact() {
           textAlign={"center"}
           mb={10}
         >
-          <Heading fontSize={"3xl"}>Contact Me</Heading>
-          <Text color={"gray.600"}>
-            Feel free to reach out for opportunities or just to say hi
-          </Text>
+          <Heading fontSize={"3xl"} color={useColorModeValue("white", "white")}>{t("contact.title")}</Heading>
+          <Text color={useColorModeValue("primary.50", "gray.300")} fontWeight="medium">{t("contact.subtitle")}</Text>
         </Stack>
 
         <Flex
           direction={{ base: "column", md: "row" }}
-          bg={useColorModeValue("white", "gray.800")}
+          bg={useColorModeValue("primary.50", "gray.800")}
           boxShadow={"xl"}
           rounded={"xl"}
+          overflow="hidden"
         >
           <Box
             bg="primary.500"
@@ -128,15 +105,24 @@ export function Contact() {
             borderRadius={{ base: "xl xl 0 0", md: "xl 0 0 xl" }}
             p={8}
             w={{ base: "full", md: "350px" }}
+            position="relative"
+            _after={{
+              content: '""',
+              position: 'absolute',
+              top: 0,
+              right: 0,
+              bottom: 0,
+              left: 0,
+              backgroundImage: 'radial-gradient(circle at 30% 70%, primary.400, transparent 40%)',
+              opacity: 0.2,
+              zIndex: 0,
+            }}
           >
-            <VStack spacing={5} align="flex-start">
-              <Heading fontSize="2xl">Contact Information</Heading>
-              <Text mt={4}>
-                I'm currently open for freelance work, full-time positions, or
-                just a friendly chat.
-              </Text>
+            <VStack spacing={5} align="flex-start" position="relative" zIndex={1}>
+              <Heading fontSize="2xl">{t("contact.info")}</Heading>
+              <Text mt={4}>{t("contact.availability")}</Text>
 
-              <HStack spacing={4} align="flex-start">
+              <HStack spacing={4} align="center" >
                 <IconButton
                   aria-label="email"
                   variant="ghost"
@@ -145,10 +131,9 @@ export function Contact() {
                   _hover={{ bg: "primary.600" }}
                   icon={<MdEmail size="24px" />}
                 />
-                <VStack spacing={0} align="flex-start">
-                  <Text fontWeight="bold">Email</Text>
-                  <Link href="mailto:vanhoa284@gmail.com">
-                    vanhoa284@gmail.com
+                <VStack spacing={0} align="center">
+                  <Link href={`mailto:${contactConfig.email}`}>
+                    {contactConfig.email}
                   </Link>
                 </VStack>
               </HStack>
@@ -162,9 +147,8 @@ export function Contact() {
                   _hover={{ bg: "primary.600" }}
                   icon={<MdPhone size="24px" />}
                 />
-                <VStack spacing={0} align="flex-start">
-                  <Text fontWeight="bold">Phone</Text>
-                  <Text>0849888897</Text>
+                <VStack spacing={0} align="center">
+                  <Text margin={0}>{contactConfig.phone}</Text>
                 </VStack>
               </HStack>
 
@@ -178,105 +162,101 @@ export function Contact() {
                   icon={<MdLocationOn size="24px" />}
                 />
                 <VStack spacing={0} align="flex-start">
-                  <Text fontWeight="bold">Location</Text>
-                  <Text>Buon Ma Thuot, DakLak</Text>
+                  <Text margin={0}>{contactConfig.location}</Text>
                 </VStack>
-              </HStack>
-
-              <HStack spacing={4} pt={8}>
-                <IconButton
-                  aria-label="linkedin"
-                  variant="ghost"
-                  size="md"
-                  color="white"
-                  _hover={{ bg: "primary.600" }}
-                  icon={<BsLinkedin size="24px" />}
-                  as="a"
-                  href="https://www.linkedin.com/in/hoa-truong-705156292/"
-                  target="_blank"
-                />
-                <IconButton
-                  aria-label="github"
-                  variant="ghost"
-                  size="md"
-                  color="white"
-                  _hover={{ bg: "primary.600" }}
-                  icon={<BsGithub size="24px" />}
-                  as="a"
-                  href="https://github.com/hoaduong345"
-                  target="_blank"
-                />
               </HStack>
             </VStack>
           </Box>
 
-          <Box p={8} width="full">
-            {isSubmitted ? (
+          <Box p={8} width="full" bg={useColorModeValue("white", "gray.800")}>
+            {formStatus.isSubmitted && !formStatus.isError ? (
               <VStack spacing={4} align="center" h="100%" justify="center">
                 <Heading
                   size="md"
                   color={useColorModeValue("primary.500", "primary.300")}
                 >
-                  Thanks for reaching out!
+                  {t("contact.thankYou")}
                 </Heading>
-                <Text>
-                  I've received your message and will get back to you as soon as
-                  possible.
-                </Text>
-                <Button
-                  colorScheme="primary"
-                  onClick={() => setIsSubmitted(false)}
-                  mt={4}
-                >
-                  Send Another Message
+                <Text>{formStatus.message}</Text>
+                <Button colorScheme="primary" onClick={resetForm} mt={4}>
+                  {t("contact.sendAnother")}
                 </Button>
               </VStack>
             ) : (
               <form onSubmit={handleSubmit}>
                 <VStack spacing={5}>
-                  <FormControl isInvalid={!!errors.name}>
-                    <FormLabel>Your Name</FormLabel>
+                  <FormControl isInvalid={!!errors.name} isRequired>
+                    <FormLabel color={useColorModeValue("primary.700", "primary.200")}>{t("contact.yourName")}</FormLabel>
                     <InputGroup>
                       <InputLeftElement>
-                        <BsPerson color="gray.500" />
+                        <BsPerson color={useColorModeValue("primary.500", "primary.300")} />
                       </InputLeftElement>
                       <Input
                         type="text"
                         name="name"
                         value={formValues.name}
                         onChange={handleChange}
-                        placeholder="Your Name"
+                        placeholder={t("contact.namePlaceholder")}
+                        borderColor={useColorModeValue("primary.200", "primary.700")}
+                        _hover={{ borderColor: useColorModeValue("primary.300", "primary.600") }}
+                        _focus={{ borderColor: "primary.500", boxShadow: `0 0 0 1px var(--chakra-colors-primary-500)` }}
                       />
                     </InputGroup>
                     <FormErrorMessage>{errors.name}</FormErrorMessage>
                   </FormControl>
 
-                  <FormControl isInvalid={!!errors.email}>
-                    <FormLabel>Email</FormLabel>
+                  <FormControl isInvalid={!!errors.email} isRequired>
+                    <FormLabel color={useColorModeValue("primary.700", "primary.200")}>{t("contact.email")}</FormLabel>
                     <InputGroup>
                       <InputLeftElement>
-                        <MdOutlineEmail color="gray.500" />
+                        <MdOutlineEmail color={useColorModeValue("primary.500", "primary.300")} />
                       </InputLeftElement>
                       <Input
                         type="email"
                         name="email"
                         value={formValues.email}
                         onChange={handleChange}
-                        placeholder="your.email@example.com"
+                        placeholder={t("contact.emailPlaceholder")}
+                        borderColor={useColorModeValue("primary.200", "primary.700")}
+                        _hover={{ borderColor: useColorModeValue("primary.300", "primary.600") }}
+                        _focus={{ borderColor: "primary.500", boxShadow: `0 0 0 1px var(--chakra-colors-primary-500)` }}
                       />
                     </InputGroup>
                     <FormErrorMessage>{errors.email}</FormErrorMessage>
                   </FormControl>
 
-                  <FormControl isInvalid={!!errors.message}>
-                    <FormLabel>Message</FormLabel>
+                  <FormControl isInvalid={!!errors.phone}>
+                    <FormLabel color={useColorModeValue("primary.700", "primary.200")}>{t("contact.phone")}</FormLabel>
+                    <InputGroup>
+                      <InputLeftElement>
+                        <MdPhone color={useColorModeValue("primary.500", "primary.300")} />
+                      </InputLeftElement>
+                      <Input
+                        type="tel"
+                        name="phone"
+                        value={formValues.phone || ""}
+                        onChange={handleChange}
+                        placeholder={t("contact.phonePlaceholder")}
+                        borderColor={useColorModeValue("primary.200", "primary.700")}
+                        _hover={{ borderColor: useColorModeValue("primary.300", "primary.600") }}
+                        _focus={{ borderColor: "primary.500", boxShadow: `0 0 0 1px var(--chakra-colors-primary-500)` }}
+                      />
+                    </InputGroup>
+                    <FormErrorMessage>{errors.phone}</FormErrorMessage>
+                  </FormControl>
+
+                  <FormControl isInvalid={!!errors.message} isRequired>
+                    <FormLabel color={useColorModeValue("primary.700", "primary.200")}>{t("contact.message")}</FormLabel>
                     <Textarea
                       name="message"
                       value={formValues.message}
                       onChange={handleChange}
-                      placeholder="Your message..."
+                      placeholder={t("contact.messagePlaceholder")}
                       rows={6}
                       resize="none"
+                      borderColor={useColorModeValue("primary.200", "primary.700")}
+                      _hover={{ borderColor: useColorModeValue("primary.300", "primary.600") }}
+                      _focus={{ borderColor: "primary.500", boxShadow: `0 0 0 1px var(--chakra-colors-primary-500)` }}
                     />
                     <FormErrorMessage>{errors.message}</FormErrorMessage>
                   </FormControl>
@@ -290,10 +270,10 @@ export function Contact() {
                     }}
                     type="submit"
                     width="full"
-                    isLoading={isSubmitting}
-                    loadingText="Sending..."
+                    isLoading={formStatus.isSubmitting}
+                    loadingText={t("contact.sending")}
                   >
-                    Send Message
+                    {t("contact.sendMessage")}
                   </Button>
                 </VStack>
               </form>
@@ -301,6 +281,34 @@ export function Contact() {
           </Box>
         </Flex>
       </Container>
+
+      {/* Error Dialog */}
+      <AlertDialog
+        isOpen={isOpen}
+        leastDestructiveRef={cancelRef}
+        onClose={onClose}
+      >
+        <AlertDialogOverlay>
+          <AlertDialogContent>
+            <AlertDialogHeader fontSize="lg" fontWeight="bold">
+              {t("contact.errorTitle")}
+            </AlertDialogHeader>
+
+            <AlertDialogBody>
+              {formStatus.message || t("contact.errorMessage")}
+            </AlertDialogBody>
+
+            <AlertDialogFooter>
+              <Button ref={cancelRef} onClick={onClose}>
+                {t("common.close")}
+              </Button>
+              <Button colorScheme="primary" onClick={resetForm} ml={3}>
+                {t("contact.tryAgain")}
+              </Button>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialogOverlay>
+      </AlertDialog>
     </Box>
   );
 }

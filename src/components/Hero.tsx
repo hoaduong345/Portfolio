@@ -2,94 +2,237 @@ import {
   Box,
   Button,
   Container,
-  createIcon,
+  Flex,
   Heading,
   Icon,
   Stack,
   Text,
+  chakra,
+  shouldForwardProp,
   useColorModeValue,
 } from '@chakra-ui/react'
+import { isValidMotionProp, motion } from 'framer-motion'
+import { useTranslation } from 'react-i18next'
+import { FaArrowRight, FaCode, FaGithub, FaLinkedin } from 'react-icons/fa'
 import { Link as ScrollLink } from 'react-scroll'
 
+const ChakraBox = chakra(motion.div, {
+  shouldForwardProp: (prop) => isValidMotionProp(prop) || shouldForwardProp(prop),
+})
+
 export function Hero() {
+  const { t } = useTranslation('hero');
+  
+  // Define background gradient for light and dark modes
+  const heroBg = useColorModeValue(
+    'linear(to-br, white, primary.50 80%)', // Light mode gradient
+    'linear(to-br, #111827 0%, #1D4ED8 100%)' // Dark mode gradient (Deep blue to brighter blue)
+  );
+
+  // Define background colors for decorative circles
+  const primaryCircleBg = useColorModeValue("primary.50", "#1E3A8A"); // Darker blue for dark mode
+  const accentCircleBg = useColorModeValue("accent.50", "#064E3B"); // Darker accent for dark mode
+  
+  // Define text colors for dark mode
+  const headingColorDark = "white";
+  const textColorDark = "gray.300"; // Lighter gray for readability
+
   return (
-    <Container maxW={'3xl'} id="hero">
-      <Stack
-        as={Box}
-        textAlign={'center'}
-        spacing={{ base: 8, md: 14 }}
-        py={{ base: 20, md: 36 }}>
-        <Heading
-          fontWeight={600}
-          fontSize={{ base: '2xl', sm: '4xl', md: '6xl' }}
-          lineHeight={'110%'}>
-          Hoa Truong <br />
-          <Text as={'span'} color={'primary.500'}>
-            Software Engineer
-          </Text>
-        </Heading>
-        <Text color={'gray.500'}>
-          Specialized in E-commerce and Booking Systems with expertise in Angular, React, and Node.js. 
-          Team leader with strong communication and problem-solving skills, focused on delivering high-quality web applications 
-          with comprehensive user experiences.
-        </Text>
-        <Stack
-          direction={'column'}
-          spacing={3}
-          align={'center'}
-          alignSelf={'center'}
-          position={'relative'}>
-          <ScrollLink to="contact" spy={true} smooth={true} offset={-70} duration={500}>
-            <Button
-              colorScheme={'primary'}
-              bg={'primary.500'}
-              rounded={'full'}
-              px={6}
-              _hover={{
-                bg: 'primary.600',
-              }}>
-              Contact Me
-            </Button>
-          </ScrollLink>
-          <ScrollLink to="projects" spy={true} smooth={true} offset={-70} duration={500}>
-            <Button variant={'link'} colorScheme={'primary'} size={'sm'}>
-              View My Work
-            </Button>
-          </ScrollLink>
-          <Box>
-            <Icon
-              as={Arrow}
-              color={useColorModeValue('gray.800', 'gray.300')}
-              w={71}
-              position={'absolute'}
-              right={-71}
-              top={'10px'}
-            />
+    <Box
+      position="relative"
+      overflow="hidden"
+      bg={heroBg}
+      py={{ base: 20, md: 32 }}
+      as="section"
+    >
+      {/* Soft geometric background circles */}
+      <Box
+        position="absolute"
+        top="-100px"
+        left="-100px"
+        w="400px"
+        h="400px"
+        borderRadius="full"
+        bg={primaryCircleBg}
+        opacity={0.25}
+        filter="blur(8px)"
+        zIndex={0}
+      />
+      <Box
+        position="absolute"
+        bottom="-120px"
+        right="-120px"
+        w="500px"
+        h="500px"
+        borderRadius="full"
+        bg={accentCircleBg}
+        opacity={0.18}
+        filter="blur(12px)"
+        zIndex={0}
+      />
+      <Container maxW={'6xl'} position="relative" zIndex={1}>
+        <Flex
+          direction={{ base: 'column', md: 'row' }}
+          align="center"
+          justify="space-between"
+          gap={8}
+        >
+          <Stack spacing={8} maxW="2xl">
+            <Stack spacing={4}>
+              <Heading
+                as="h1"
+                size="4xl"
+                fontWeight="bold"
+                lineHeight="1.2"
+                bgGradient="linear(to-r, primary.500, accent.500)"
+                bgClip="text"
+              >
+                {t('title')}
+              </Heading>
+              <Flex align="center" gap={2}>
+                <Icon as={FaCode} color="primary.500" _dark={{ color: "primary.300" }} />
+                <Heading
+                  as="h2"
+                  size="2xl"
+                  fontWeight="semibold"
+                  color="gray.600"
+                  _dark={{ color: headingColorDark }} // Use defined dark mode color
+                >
+                  {t('jobTitle')}
+                </Heading>
+              </Flex>
+            </Stack>
             <Text
-              fontSize={'lg'}
-              fontFamily={'Caveat'}
-              position={'absolute'}
-              right={'-125px'}
-              top={'-15px'}
-              transform={'rotate(10deg)'}>
-              Check out my projects!
+              fontSize="xl"
+              color="gray.600"
+              _dark={{ color: textColorDark }} // Use defined dark mode color
+              maxW="2xl"
+            >
+              {t('description')}
             </Text>
+            <Stack direction={{ base: 'column', sm: 'row' }} spacing={4}>
+              <ScrollLink to="contact" spy={true} smooth={true} offset={-70} duration={500}>
+                <Button
+                  size="lg"
+                  colorScheme="primary"
+                  rightIcon={<FaArrowRight />}
+                  px={8}
+                  py={6}
+                  fontSize="lg"
+                  fontWeight="bold"
+                  _hover={{
+                    transform: 'translateY(-2px)',
+                    boxShadow: 'lg',
+                  }}
+                  transition="all 0.2s"
+                >
+                  {t('buttons.contact')}
+                </Button>
+              </ScrollLink>
+              <Stack direction="row" spacing={4}>
+                <Button
+                  as="a"
+                  href="https://github.com/hoaduong345"
+                  target="_blank"
+                  size="lg"
+                  variant="outline"
+                  leftIcon={<FaGithub />}
+                  colorScheme="primary"
+                  _hover={{
+                    transform: 'translateY(-2px)',
+                    boxShadow: 'md',
+                  }}
+                  transition="all 0.2s"
+                >
+                  {t('buttons.github')}
+                </Button>
+                <Button
+                  as="a"
+                  href="https://www.linkedin.com/in/hoa-truong-705156292/"
+                  target="_blank"
+                  size="lg"
+                  variant="outline"
+                  leftIcon={<FaLinkedin />}
+                  colorScheme="primary"
+                  _hover={{
+                    transform: 'translateY(-2px)',
+                    boxShadow: 'md',
+                  }}
+                  transition="all 0.2s"
+                >
+                  {t('buttons.linkedin')}
+                </Button>
+              </Stack>
+            </Stack>
+          </Stack>
+
+          {/* 3D Card Effect */}
+          <Box
+            position="relative"
+            display={{ base: 'none', md: 'block' }}
+            w="400px"
+            h="400px"
+            transform="perspective(1000px) rotateY(15deg)"
+            transition="transform 0.5s"
+            _hover={{ transform: 'perspective(1000px) rotateY(0deg)' }}
+          >
+            <Box
+              position="absolute"
+              w="full"
+              h="full"
+              bg="white"
+              _dark={{ bg: 'gray.800' }}
+              borderRadius="2xl"
+              boxShadow="xl"
+              p={6}
+              display="flex"
+              flexDirection="column"
+              justifyContent="center"
+              alignItems="center"
+              gap={4}
+              transform="translateZ(20px)"
+              transition="all 0.3s ease"
+            >
+              <Box
+                w="200px"
+                h="200px"
+                borderRadius="full"
+                bgGradient={useColorModeValue(
+                  "linear(to-br, primary.500, accent.500)",
+                  "linear(to-br, primary.600, accent.600)"
+                )}
+                opacity={0.8}
+                position="relative"
+                overflow="hidden"
+                boxShadow={useColorModeValue(
+                  "0 8px 20px rgba(66, 133, 244, 0.3)",
+                  "0 8px 20px rgba(59, 117, 217, 0.3)"
+                )}
+              >
+                <Box
+                  position="absolute"
+                  top="50%"
+                  left="50%"
+                  transform="translate(-50%, -50%)"
+                  fontSize="6xl"
+                  color="white"
+                  opacity={0.9}
+                >
+                  <FaCode />
+                </Box>
+              </Box>
+              <Text 
+                fontSize="xl" 
+                fontWeight="bold" 
+                textAlign="center"
+                color={useColorModeValue("gray.700", "gray.200")}
+              >
+                {t('cardText')}
+              </Text>
+            </Box>
           </Box>
-        </Stack>
-      </Stack>
-    </Container>
+        </Flex>
+      </Container>
+    </Box>
   )
 }
-
-const Arrow = createIcon({
-  displayName: 'Arrow',
-  viewBox: '0 0 72 24',
-  path: (
-    <path
-      fillRule="evenodd"
-      clipRule="evenodd"
-      d="M0.600904 7.08166C0.764293 6.8879 1.01492 6.79004 1.26654 6.82177C2.83216 7.01918 5.20326 7.24581 7.54543 7.23964C9.92491 7.23338 12.1351 6.98464 13.4704 6.32142C13.84 6.13785 14.2885 6.28805 14.4722 6.65692C14.6559 7.02578 14.5052 7.47362 14.1356 7.6572C12.4625 8.48822 9.94063 8.72541 7.54852 8.7317C5.67514 8.73663 3.79547 8.5985 2.29921 8.44247C2.80955 9.59638 3.50943 10.6396 4.24665 11.7384C4.39435 11.9585 4.54354 12.1809 4.69301 12.4068C5.79543 14.0733 6.88128 15.8995 7.1179 18.2636C7.15893 18.6735 6.85928 19.0393 6.4486 19.0805C6.03792 19.1217 5.67174 18.8227 5.6307 18.4128C5.43271 16.4346 4.52957 14.868 3.4457 13.2296C3.3058 13.0181 3.16221 12.8046 3.01684 12.5885C2.05899 11.1646 1.02372 9.62564 0.457909 7.78069C0.383671 7.53862 0.437515 7.27541 0.600904 7.08166ZM5.52039 10.2248C5.77662 9.90161 6.24663 9.84687 6.57018 10.1025C16.4834 17.9344 29.9158 22.4064 42.0781 21.4773C54.1988 20.5514 65.0339 14.2748 69.9746 0.584299C70.1145 0.196597 70.5427 -0.0046455 70.931 0.134813C71.3193 0.274276 71.5206 0.70162 71.3807 1.08932C66.2105 15.4159 54.8056 22.0014 42.1913 22.965C29.6185 23.9254 15.8207 19.3142 5.64226 11.2727C5.31871 11.0171 5.26415 10.5479 5.52039 10.2248Z"
-      fill="currentColor"
-    />
-  ),
-})
