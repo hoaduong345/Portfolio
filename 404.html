@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hoa Truong - Portfolio</title>
+  <script>
+    // Redirect to index.html for client-side routing
+    const segment = window.location.pathname.split('/portfolio/')[1];
+    window.location.href = '/portfolio/' + (segment || '') + window.location.search + window.location.hash;
+  </script>
+</head>
+<body>
+  <p>Redirecting...</p>
+</body>
+</html>
