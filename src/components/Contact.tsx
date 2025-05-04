@@ -79,7 +79,7 @@ export function Contact() {
   );
 
   return (
-    <Box id="contact" bgGradient={bgGradient}>
+    <Box id="contact" bgGradient={bgGradient} marginBottom={"20"}>
       <Container maxW={"7xl"} pt={16}>
         <Stack
           spacing={4}

@@ -65,8 +65,8 @@ export function Projects() {
 
   // Background gradient for projects section synchronized with Hero
   const bgGradient = useColorModeValue(
-    'linear(to-br, white, primary.50 80%)',
-    'linear(to-br, gray.900, primary.900 80%)'
+    "linear(to-br, white, primary.50 80%)",
+    "linear(to-br, gray.900, primary.900 80%)"
   );
 
   const headingColor = useColorModeValue("primary.600", "primary.300");
@@ -109,7 +109,9 @@ export function Projects() {
           maxW={"3xl"}
           textAlign={"center"}
           mb={10}
-          pt={16} /* Thay thế padding bên ngoài bằng padding-top cho phần nội dung */
+          pt={
+            16
+          } /* Thay thế padding bên ngoài bằng padding-top cho phần nội dung */
         >
           <ChakraBox
             initial={{ opacity: 0, y: -20 }}
@@ -205,9 +207,10 @@ export function Projects() {
                     x: isVisible ? 0 : index % 2 === 0 ? -50 : 50,
                     scale: isVisible ? 1 : 0.95,
                   }}
-                  transition={{
-                    duration: 0.5,
-                    delay: 0.3 + index * 0.2,
+                  transition="all 0.5s"
+                  _before={{
+                    transition: "all 0.5s",
+                    transitionDelay: `${0.3 + index * 0.2}s`,
                   }}
                   whileHover={{
                     y: -5,
@@ -229,7 +232,7 @@ interface ProjectCardProps {
   index: number;
 }
 
-function ProjectCard({ project, index }: ProjectCardProps) {
+function ProjectCard({ project }: ProjectCardProps) {
   const { t } = useTranslation("projects");
   const [isHovered, setIsHovered] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
@@ -386,7 +389,7 @@ function ProjectCard({ project, index }: ProjectCardProps) {
                     animate={
                       isExpanded ? { opacity: 1, x: 0 } : { opacity: 1, x: 0 }
                     }
-                    transition={{ duration: 0.3, delay: idx * 0.1 }}
+                    transition={`duration 0.3s, delay ${idx * 0.1}s`}
                     whileHover={{ x: 3 }}
                   >
                     <Text color={"gray.600"} _dark={{ color: "gray.400" }}>

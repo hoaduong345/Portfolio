@@ -22,7 +22,7 @@ function safeTranslateArray(key: string, defaultValue: string[] = []): string[] 
     const result = i18n.t(key, { returnObjects: true, ns: 'projects' });
     // Check if translation was successful and is an array
     if (Array.isArray(result)) {
-      return result;
+      return result.map(item => String(item));
     }
     return defaultValue;
   } catch (error) {

@@ -2,7 +2,7 @@ import { Project } from './types/Project';
 import { Skill } from './types/Skill';
 import { renderProjects } from './components/projectsRenderer';
 import { renderSkills } from './components/skillsRenderer';
-import { setupContactForm } from './components/contactForm.ts';
+import { setupContactForm } from './components/contact';
 
 // Sample data - in a real project, you might fetch this from an API
 const projects: Project[] = [
@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Smooth scrolling for navigation
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(this: HTMLAnchorElement, e: Event) {
+    anchor.addEventListener('click', function (this: HTMLAnchorElement, e: Event) {
       e.preventDefault();
 
       const targetId = this.getAttribute('href') as string;

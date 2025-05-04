@@ -1,7 +1,7 @@
-import { Button, HStack, Menu, MenuButton, MenuItem, MenuList, Box, Text, useColorModeValue } from '@chakra-ui/react';
+import { Box, Button, Menu, MenuButton, MenuItem, MenuList, Text, useColorModeValue } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
-import { IoLanguage } from 'react-icons/io5';
 import { IoMdArrowDropdown } from 'react-icons/io';
+import { IoLanguage } from 'react-icons/io5';
 
 export function LanguageSwitcher() {
   const { i18n, t } = useTranslation('common');

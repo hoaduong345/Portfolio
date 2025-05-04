@@ -7,18 +7,12 @@ import {
   Icon,
   Stack,
   Text,
-  chakra,
-  shouldForwardProp,
-  useColorModeValue,
+  useColorModeValue
 } from '@chakra-ui/react'
-import { isValidMotionProp, motion } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
 import { FaArrowRight, FaCode, FaGithub, FaLinkedin } from 'react-icons/fa'
 import { Link as ScrollLink } from 'react-scroll'
 
-const ChakraBox = chakra(motion.div, {
-  shouldForwardProp: (prop) => isValidMotionProp(prop) || shouldForwardProp(prop),
-})
 
 export function Hero() {
   const { t } = useTranslation('hero');

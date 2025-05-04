@@ -19,6 +19,12 @@ import { motion, isValidMotionProp } from 'framer-motion'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
+interface SkillCategory {
+  title: string;
+  description: string;
+  icon: string;
+}
+
 const ChakraBox = chakra(motion.div, {
   shouldForwardProp: (prop) => isValidMotionProp(prop) || shouldForwardProp(prop),
 })

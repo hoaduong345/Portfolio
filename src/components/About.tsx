@@ -6,14 +6,44 @@ import {
   Stack,
   Text,
   useColorModeValue,
+  chakra,
+  shouldForwardProp,
 } from "@chakra-ui/react";
-import { useRef, useState } from "react";
+import { motion, isValidMotionProp } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
+import "./About.css";
+
+// Add ChakraBox for animations
+const ChakraBox = chakra(motion.div, {
+  shouldForwardProp: (prop) =>
+    isValidMotionProp(prop) || shouldForwardProp(prop),
+});
 
 export function About() {
   const { t } = useTranslation('about');
   const [isLeaderActive, setIsLeaderActive] = useState(false);
   const leaderRef = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  // Add IntersectionObserver for animation trigger
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    const section = document.getElementById("about");
+    if (section) observer.observe(section);
+
+    return () => {
+      if (section) observer.unobserve(section);
+    };
+  }, []);
 
   // Handle mouse move for leader element hover effect
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -38,34 +68,53 @@ export function About() {
     'linear(to-br, gray.900, primary.900 80%)'
   );
 
+  // New heading color variables for consistency
+  const headingColor = useColorModeValue("primary.600", "primary.300");
+
   return (
     <Box id="about" bgGradient={bgColor}>
       <Container maxW={"7xl"}>
-        <Heading
-          lineHeight={1.1}
-          fontWeight={600}
-          fontSize={{ base: "3xl", sm: "4xl", lg: "5xl" }}
+        <Stack
+          spacing={4}
+          as={Container}
+          maxW={"3xl"}
+          textAlign={"center"}
           mb={8}
-          textAlign="center"
-          pt={16} /* Thay thế padding bên ngoài bằng padding-top cho phần nội dung */
+          pt={16}
         >
-          <Text
-            as={"span"}
-            position={"relative"}
-            _after={{
-              content: "''",
-              width: "full",
-              height: "30%",
-              position: "absolute",
-              bottom: 1,
-              left: 0,
-              bg: "primary.400",
-              zIndex: -1,
+          <ChakraBox
+            initial={{ opacity: 0, y: -20 }}
+            animate={{
+              opacity: isVisible ? 1 : 0,
+              y: isVisible ? 0 : -20,
             }}
+            transition="all 0.5s"
           >
-            {t('title')}
-          </Text>
-        </Heading>
+            <Heading
+              fontSize={"3xl"}
+              fontWeight={600}
+              bgGradient="linear(to-r, primary.500, accent.500)"
+              bgClip="text"
+              color={headingColor}
+            >
+              {t('title')}
+            </Heading>
+          </ChakraBox>
+          <ChakraBox
+            initial={{ opacity: 0, y: -10 }}
+            animate={{
+              opacity: isVisible ? 1 : 0,
+              y: isVisible ? 0 : -10,
+            }}
+            transition="all 0.5s 0.2s"
+          >
+            <Text 
+              color={useColorModeValue("gray.600", "gray.400")}
+            >
+              {t('subtitle')}
+            </Text>
+          </ChakraBox>
+        </Stack>
 
         {/* Leader Interactive Element - Moved to the top */}
         <div
@@ -104,15 +153,15 @@ export function About() {
           spacing={{ base: 8, md: 10 }}
           py={{ base: 10, md: 14 }}
           direction={{ base: "column", md: "row" }}
-        >
+        ></Stack>
           <Stack flex={1} spacing={{ base: 5, md: 10 }}>
-            <Text color={"gray.500"}>
+            <Text color={useColorModeValue("gray.600", "gray.400")}>
               {t('mainContent.paragraph1')}
             </Text>
-            <Text color={"gray.500"}>
+            <Text color={useColorModeValue("gray.600", "gray.400")}>
               {t('mainContent.paragraph2')}
             </Text>
-            <Text color={"gray.500"}>
+            <Text color={useColorModeValue("gray.600", "gray.400")}>
               {t('mainContent.paragraph3')}
             </Text>
           </Stack>
@@ -137,7 +186,6 @@ export function About() {
               </div>
             </Box>
           </Flex>
-        </Stack>
       </Container>
     </Box>
   );

@@ -1,12 +1,10 @@
 import {
   Box,
   Container,
-  Flex,
   Heading,
   Text,
   useColorModeValue,
-  VStack,
-  Divider,
+  VStack
 } from "@chakra-ui/react";
 import { useTranslation } from "react-i18next";
 import { FaQuoteLeft, FaQuoteRight } from "react-icons/fa";
