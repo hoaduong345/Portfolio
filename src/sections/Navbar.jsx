@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { motion } from "motion/react";
+import LogoCanvas from "../components/LogoCanvas";
+import styles from "../components/LogoCanvas.module.css";
 
 function Navigation() {
   return (
@@ -34,9 +35,8 @@ const Navbar = () => {
     <div className="fixed-inset-x-0 z-20 w-full backdrop-blur-lg bg-primary/40 ">
       <div className="mx-auto c-space max-w-7xl">
         <div className="flex items-center justify-between py-2 sm:py-0">
-          <a className="text-xl font-bold transition-colors text-neutral-400  hover:text-white">
-            {" "}
-            Hoa
+          <a className={`${styles.navbarLogo} transition-colors hover:text-white`} href="#home" aria-label="Home">
+            <LogoCanvas width={64} height={64} />
           </a>
           <button
             onClick={() => setIsOpen(!isOpen)}

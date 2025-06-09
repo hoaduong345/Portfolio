@@ -1,17 +1,17 @@
 import { Canvas, useFrame } from "@react-three/fiber";
-import { Astronaut } from "../components/Astronaut";
-import HeroText from "../components/heroText";
+import HeroText from "../components/HeroText";
 import ParallaxBackground from "../components/ParallaxBackground";
-import { Float, OrbitControls } from "@react-three/drei";
+import { Astronaut } from "../components/Astronaut";
+import { Float } from "@react-three/drei";
 import { useMediaQuery } from "react-responsive";
 import { easing } from "maath";
 import { Suspense } from "react";
 import Loader from "../components/Loader";
 
 const Hero = () => {
-  const ismoblile = useMediaQuery({ maxWidth: 853 });
+  const isMobile = useMediaQuery({ maxWidth: 853 });
   return (
-    <section className="flex items-start justify-center md:items-start md:justify-start min-h-screen overflow-hidden c-space">
+    <section className="flex items-start justify-center min-h-screen overflow-hidden md:items-start md:justify-start c-space">
       <HeroText />
       <ParallaxBackground />
       <figure
@@ -22,11 +22,10 @@ const Hero = () => {
           <Suspense fallback={<Loader />}>
             <Float>
               <Astronaut
-                scale={ismoblile && 0.23}
-                position={ismoblile && [0, -1.5, 0]}
+                scale={isMobile && 0.23}
+                position={isMobile && [0, -1.5, 0]}
               />
             </Float>
-            <OrbitControls />
             <Rig />
           </Suspense>
         </Canvas>
