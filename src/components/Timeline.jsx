@@ -1,5 +1,5 @@
 "use client";
-import { useScroll, useTransform, motion } from "framer-motion";
+import { useScroll, useTransform, motion } from "motion/react";
 import React, { useEffect, useRef, useState } from "react";
 
 export const Timeline = ({ data }) => {
@@ -47,8 +47,8 @@ export const Timeline = ({ data }) => {
                 <h3>{item.date}</h3>
                 <h3>{item.job}</h3>
               </div>
-              {item.contents.map((content, index) => (
-                <p className="mb-3 font-normal text-neutral-400" key={index}>
+              {item.contents.map((content, contentIndex) => (
+                <p className="mb-3 font-normal text-neutral-400" key={contentIndex}>
                   {content}
                 </p>
               ))}
