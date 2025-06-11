@@ -4,7 +4,7 @@ import tailwindcss from "@tailwindcss/vite";
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: "./",
+  base: "/", // Correct for custom domains on GitHub Pages
   plugins: [
     react(),
     tailwindcss({
@@ -13,13 +13,9 @@ export default defineConfig({
   ],
   build: {
     outDir: "dist",
-    assetsDir: "assets",
     sourcemap: false,
-    target: 'esnext',
-    minify: 'esbuild',
     rollupOptions: {
       output: {
-        manualChunks: undefined,
         entryFileNames: 'assets/[name]-[hash].js',
         chunkFileNames: 'assets/[name]-[hash].js',
         assetFileNames: 'assets/[name]-[hash].[ext]'
