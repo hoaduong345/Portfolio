@@ -4,21 +4,26 @@ import tailwindcss from "@tailwindcss/vite";
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: "./",
   plugins: [
     react(),
     tailwindcss({
-      // Optional: You can specify tailwind config file path here
       config: "./tailwind.config.js",
     }),
   ],
   build: {
     outDir: "dist",
-    assetsDir: "assets",
+    sourcemap: false,
     rollupOptions: {
       output: {
-        manualChunks: undefined,
-      },
-    },
+        manualChunks: {
+          vendor: ['react', 'react-dom'],
+          motion: ['framer-motion']
+        }
+      }
+    }
   },
+  server: {
+    port: 3000,
+    open: true
+  }
 });
